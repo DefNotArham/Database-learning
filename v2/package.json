@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx testing.ts"
+    "dev": "tsx src/testing.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "tsx": "^4.23.12",
     "typescript": "^7.0.2"
   }
 }

@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import fs from "fs";
 
 type Document = {
   id: string;
@@ -16,4 +17,17 @@ class Database {
       ...document,
     });
   }
+
+  save() {
+    fs.writeFileSync(
+      "database/database.json",
+      JSON.stringify(this.data, null, 2),
+    );
+  }
+
+  showDocument() {
+    console.log(this.data);
+  }
 }
+
+export default Database;
