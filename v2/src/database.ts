@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import fs from "fs";
+import { argv0 } from "node:process";
 
 type Document = {
   id: string;
@@ -51,6 +52,18 @@ class Database {
 
     const key = Object.keys(content)[0];
     data[key] = content[key];
+  }
+
+  deleteOne(query: Record<string, unknown>) {
+    const index = this.data.findIndex((document) => {
+      const key = Object.keys(query)[0];
+
+      return document[key] === query[key];
+    });
+
+    if (index === -1) return;
+
+    this.data.splice(index, 1);
   }
 
   save() {
