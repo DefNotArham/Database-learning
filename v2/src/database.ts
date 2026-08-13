@@ -40,6 +40,19 @@ class Database {
     });
   }
 
+  updateOne(query: Record<string, unknown>, content: Record<string, unknown>) {
+    const data = this.data.find((document) => {
+      const key = Object.keys(query)[0];
+
+      return document[key] === query[key];
+    });
+
+    if (!data) return;
+
+    const key = Object.keys(content)[0];
+    data[key] = content[key];
+  }
+
   save() {
     fs.writeFileSync(
       "database/database.json",
