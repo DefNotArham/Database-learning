@@ -24,8 +24,16 @@ class Database {
     });
   }
 
-  find(query: Record<string, unknown>) {
+  findMany(query: Record<string, unknown>) {
     return this.data.filter((document) => {
+      const key = Object.keys(query)[0];
+
+      return document[key] === query[key];
+    });
+  }
+
+  findOne(query: Record<string, unknown>) {
+    return this.data.find((document) => {
       const key = Object.keys(query)[0];
 
       return document[key] === query[key];
