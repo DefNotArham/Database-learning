@@ -26,17 +26,21 @@ class Database {
 
   findMany(query: Record<string, unknown>) {
     return this.data.filter((document) => {
-      const key = Object.keys(query)[0];
+      const keys = Object.keys(query);
 
-      return document[key] === query[key];
+      return keys.every((key) => {
+        return document[key] === query[key];
+      });
     });
   }
 
   findOne(query: Record<string, unknown>) {
     return this.data.find((document) => {
-      const key = Object.keys(query)[0];
+      const keys = Object.keys(query);
 
-      return document[key] === query[key];
+      return keys.every((key) => {
+        return document[key] === query[key];
+      });
     });
   }
 
@@ -45,9 +49,11 @@ class Database {
     changeQuery: Record<string, unknown>,
   ) {
     const data = this.data.find((document) => {
-      const key = Object.keys(query)[0];
+      const keys = Object.keys(query);
 
-      return document[key] === query[key];
+      return keys.every((key) => {
+        return document[key] === query[key];
+      });
     });
 
     if (!data) return;
@@ -58,9 +64,11 @@ class Database {
 
   deleteOne(query: Record<string, unknown>) {
     const index = this.data.findIndex((document) => {
-      const key = Object.keys(query)[0];
+      const keys = Object.keys(query);
 
-      return document[key] === query[key];
+      return keys.every((key) => {
+        return document[key] === query[key];
+      });
     });
 
     if (index === -1) return;
