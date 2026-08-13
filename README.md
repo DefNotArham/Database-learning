@@ -1,6 +1,6 @@
 # TypeScript Database
 
-A simple database built from scratch using TypeScript and Node.js.
+Learning how to build a database from scratch using TypeScript and Node.js.
 
 ## Tech Stack
 
