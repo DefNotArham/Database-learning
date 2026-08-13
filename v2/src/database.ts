@@ -9,12 +9,26 @@ type Document = {
 class Database {
   private data: Document[] = [];
 
+  constructor() {
+    const file = fs.readFileSync("database/database.json", "utf-8");
+    const data = JSON.parse(file);
+    this.data = data;
+  }
+
   insert(document: Omit<Document, "id">) {
     const id = crypto.randomUUID();
 
     this.data.push({
       id,
       ...document,
+    });
+  }
+
+  find(query: Record<string, unknown>) {
+    return this.data.filter((document) => {
+      const key = Object.keys(query)[0];
+
+      return document[key] === query[key];
     });
   }
 

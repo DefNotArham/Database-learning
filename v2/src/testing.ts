@@ -5,4 +5,6 @@ const db = new Database();
 db.insert({ name: "Arham", age: 17 });
 db.insert({ name: "Kabir" });
 
+db.save();
+
 db.showDocument();
