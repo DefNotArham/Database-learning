@@ -1,6 +1,5 @@
-import crypto from "node:crypto";
+import crypto from "crypto";
 import fs from "fs";
-import { argv0 } from "node:process";
 
 type Document = {
   id: string;
@@ -41,7 +40,10 @@ class Database {
     });
   }
 
-  updateOne(query: Record<string, unknown>, content: Record<string, unknown>) {
+  updateOne(
+    query: Record<string, unknown>,
+    changeQuery: Record<string, unknown>,
+  ) {
     const data = this.data.find((document) => {
       const key = Object.keys(query)[0];
 
@@ -50,8 +52,8 @@ class Database {
 
     if (!data) return;
 
-    const key = Object.keys(content)[0];
-    data[key] = content[key];
+    const key = Object.keys(changeQuery)[0];
+    data[key] = changeQuery[key];
   }
 
   deleteOne(query: Record<string, unknown>) {
@@ -71,10 +73,6 @@ class Database {
       "database/database.json",
       JSON.stringify(this.data, null, 2),
     );
-  }
-
-  showDocument() {
-    console.log(this.data);
   }
 }
 
