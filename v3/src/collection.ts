@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import fs from "fs";
 
 type Document = {
   id: string;
@@ -11,14 +12,22 @@ class Collection {
 
   constructor(name: string) {
     this.name = name;
+
+    if (fs.existsSync(`database/${this.name}/data.json`)) {
+      const file = fs.readFileSync(`database/${this.name}/data.json`, "utf-8");
+
+      const data = JSON.parse(file);
+
+      this.data = data;
+    }
   }
 
-  insert(query: Record<string, unknown>) {
+  insert(document: Record<string, unknown>) {
     const id = crypto.randomUUID();
 
     this.data.push({
       id,
-      ...query,
+      ...document,
     });
   }
 
@@ -72,6 +81,19 @@ class Collection {
     if (index === -1) return;
 
     this.data.splice(index, 1);
+  }
+
+  getData() {
+    return this.data;
+  }
+
+  save() {
+    fs.mkdirSync(`database/${this.name}`, { recursive: true });
+
+    fs.writeFileSync(
+      `database/${this.name}/data.json`,
+      JSON.stringify(this.data, null, 2),
+    );
   }
 }
 

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ff47852f-d316-4563-a063-b594fead4690",
+    "name": "Arham",
+    "age": 17,
+    "isStudent": true
+  },
+  {
+    "id": "b133d398-0413-441a-aaa0-0618fa072807",
+    "name": "Arham",
+    "age": 17,
+    "isStudent": true
+  },
+  {
+    "id": "c3c1b117-09d5-4bc5-b8b9-42487e2cfb65",
+    "name": "yoo",
+    "age": 110
+  },
+  {
+    "id": "fcfad653-7f23-47c8-bb7c-a77329ae7001",
+    "name": "Arham",
+    "age": 17,
+    "isStudent": true
+  },
+  {
+    "id": "69d46d5c-7cf1-4fd5-8c60-14d67ebb6b1e",
+    "name": "yoo",
+    "age": 110
+  }
+]

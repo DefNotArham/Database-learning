@@ -9,3 +9,16 @@ users.insert({
   age: 17,
   isStudent: true,
 });
+
+users.insert({
+  name: "yoo",
+  age: 110,
+});
+
+const testing = db.collection("testing");
+testing.insert({
+  testing: true,
+});
+
+users.save();
+testing.save();

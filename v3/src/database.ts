@@ -1,4 +1,5 @@
 import Collection from "./collection.js";
+import fs from "fs";
 
 class Database {
   private collections: Record<string, Collection> = {};
@@ -13,6 +14,10 @@ class Database {
     this.collections[name] = collection;
 
     return collection;
+  }
+
+  getCollections() {
+    return this.collections;
   }
 }
 
