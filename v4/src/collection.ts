@@ -101,10 +101,10 @@ class Collection {
     const index: Map<unknown, string[]> = new Map();
 
     for (const document of this.data) {
-      const value = document[field];
+      const value: unknown = document[field];
 
       if (index.has(value)) {
-        const ids = index.get(value);
+        const ids: string[] | undefined = index.get(value);
 
         ids?.push(document.id);
       } else {
