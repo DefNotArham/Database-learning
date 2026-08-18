@@ -34,17 +34,6 @@ class Collection {
 
   findMany(query: Record<string, unknown>) {
     const keys = Object.keys(query);
-    const key = keys[0];
-
-    const index = this.indexes[key];
-
-    if (index) {
-      const ids = index.get(query[key]);
-
-      if (ids) {
-        return this.data.filter((document) => ids.includes(document.id));
-      }
-    }
 
     return this.data.filter((document) => {
       return keys.every((key) => {
@@ -106,24 +95,6 @@ class Collection {
       `database/${this.name}/data.json`,
       JSON.stringify(this.data, null, 2),
     );
-  }
-
-  createIndex(field: string) {
-    const index: Map<unknown, string[]> = new Map();
-
-    for (const document of this.data) {
-      const value: unknown = document[field];
-
-      if (index.has(value)) {
-        const ids: string[] | undefined = index.get(value);
-
-        ids?.push(document.id);
-      } else {
-        index.set(value, [document.id]);
-      }
-    }
-
-    this.indexes[field] = index;
   }
 }
 
