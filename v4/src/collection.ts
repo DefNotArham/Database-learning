@@ -33,9 +33,20 @@ class Collection {
   }
 
   findMany(query: Record<string, unknown>) {
-    return this.data.filter((document) => {
-      const keys = Object.keys(query);
+    const keys = Object.keys(query);
+    const key = keys[0];
 
+    const index = this.indexes[key];
+
+    if (index) {
+      const ids = index.get(query[key]);
+
+      if (ids) {
+        return this.data.filter((document) => ids.includes(document.id));
+      }
+    }
+
+    return this.data.filter((document) => {
       return keys.every((key) => {
         return document[key] === query[key];
       });
