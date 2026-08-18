@@ -96,6 +96,24 @@ class Collection {
       JSON.stringify(this.data, null, 2),
     );
   }
+
+  createIndex(field: string) {
+    const index: Map<unknown, string[]> = new Map();
+
+    for (const document of this.data) {
+      const value: unknown = document[field];
+
+      if (index.has(value)) {
+        const ids = index.get(value);
+
+        ids?.push(document.id);
+      } else {
+        index.set(value, [document.id]);
+      }
+    }
+
+    this.indexes[field] = index;
+  }
 }
 
 export default Collection;
