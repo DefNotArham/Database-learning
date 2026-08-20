@@ -30,6 +30,26 @@ class Collection {
       id,
       ...document,
     });
+
+    const keys = Object.keys(document); // keys = ["name", "age"]
+
+    for (let i = 0; i < keys.length; i++) {
+      const field = keys[i]; // field = "name" or field = "age" ...etc
+      const index = this.indexes[field]; // "Arham" --> ["8f3a...", "7c42..."]
+      if (index) {
+        const value: unknown = document[field]; // "Arham"
+
+        if (index.has(value)) {
+          const ids = index.get(value);
+
+          if (ids) {
+            ids.push(id);
+          }
+        } else {
+          index.set(value, [id]);
+        }
+      }
+    }
   }
 
   findMany(query: Record<string, unknown>) {
