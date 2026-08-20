@@ -99,7 +99,39 @@ class Collection {
     if (!data) return;
 
     const key = Object.keys(changeQuery)[0];
-    data[key] = changeQuery[key];
+    const index = this.indexes[key];
+
+    const oldValue = data[key];
+    const newValue = changeQuery[key];
+
+    if (index) {
+      // Remove the document ID from the old value
+      const oldIds = index.get(oldValue);
+
+      if (oldIds) {
+        const idIndex = oldIds.findIndex((id) => {
+          return id === data.id;
+        });
+
+        if (idIndex !== -1) {
+          oldIds.splice(idIndex, 1);
+        }
+      }
+
+      // Add the document ID to the new value
+      if (index.has(newValue)) {
+        const newIds = index.get(newValue);
+
+        if (newIds) {
+          newIds.push(data.id);
+        }
+      } else {
+        index.set(newValue, [data.id]);
+      }
+    }
+
+    // Finally update the actual document
+    data[key] = newValue;
   }
 
   deleteOne(query: Record<string, unknown>) {
