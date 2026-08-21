@@ -6,6 +6,10 @@ type Document = {
   [key: string]: unknown;
 };
 
+type QueryOperator = {
+  [operator: string]: unknown;
+};
+
 class Collection {
   private data: Document[] = [];
   private name: string;
@@ -69,6 +73,27 @@ class Collection {
 
     return this.data.filter((document) => {
       return keys.every((key) => {
+        const value = query[key];
+
+        if (typeof value === "object" && value != null) {
+          const operator = Object.keys(value)[0];
+
+          const operatorValue = value as QueryOperator;
+          const number = operatorValue[operator];
+
+          if (operator === "$gt")
+            return (document[key] as number) > (number as number);
+
+          if (operator === "$lt")
+            return (document[key] as number) < (number as number);
+
+          if (operator === "$gte")
+            return (document[key] as number) >= (number as number);
+
+          if (operator === "$lte")
+            return (document[key] as number) <= (number as number);
+        }
+
         return document[key] === query[key];
       });
     });
